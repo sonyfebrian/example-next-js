@@ -1,11 +1,58 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [numbers, setNumbers] = useState([
+    83, 1, 78, 26, 67, 54, 49, 7, 36, 99, 26, 19, 15, 7, 21, 39, 7, 2, 8,
+  ]);
+  const [sum, setSum] = useState(0);
+  const [min, setMin] = useState(null);
+  const [max, setMax] = useState(null);
+  const [even, setEven] = useState([]);
+  const [odd, setOdd] = useState([]);
+  const [duplicates, setDuplicates] = useState([]);
+
+  const calculate = () => {
+    let sum = 0;
+    let min = numbers[0];
+    let max = numbers[0];
+    let even = [];
+    let odd = [];
+
+    for (let i = 0; i < numbers.length; i++) {
+      sum += numbers[i];
+      if (numbers[i] < min) {
+        min = numbers[i];
+      }
+      if (numbers[i] > max) {
+        max = numbers[i];
+      }
+      if (numbers[i] % 2 === 0) {
+        even.push(numbers[i]);
+      } else {
+        odd.push(numbers[i]);
+      }
+      if (
+        numbers.lastIndexOf(numbers[i]) !== i &&
+        duplicates.indexOf(numbers[i]) === -1
+      ) {
+        duplicates.push(numbers[i]);
+      }
+    }
+
+    setSum(sum);
+    setMin(min);
+    setMax(max);
+    setEven(even);
+    setOdd(odd);
+    setDuplicates(duplicates);
+  };
+
   return (
     <>
       <Head>
@@ -15,109 +62,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+        <button onClick={calculate}>Calculate</button>
+        <p>Numbers: {numbers.join(", ")}</p>
+        <p>Sum: {sum}</p>
+        <p>Minimum: {min}</p>
+        <p>Maximum: {max}</p>
+        <p>Even: {even.join(", ")}</p>
+        <p>Odd: {odd.join(", ")}</p>
+        <p>Duplicates: {duplicates.join(", ")}</p>
       </main>
     </>
-  )
+  );
 }
