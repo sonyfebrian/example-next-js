@@ -16,6 +16,8 @@ export default function Home() {
   const [even, setEven] = useState([]);
   const [odd, setOdd] = useState([]);
   const [duplicates, setDuplicates] = useState([]);
+  const [evenCount, setEvenCount] = useState(0);
+  const [oddCount, setOddCount] = useState(0);
 
   const calculate = () => {
     let sum = 0;
@@ -23,6 +25,8 @@ export default function Home() {
     let max = numbers[0];
     let even = [];
     let odd = [];
+    let evenCount = 0;
+    let oddCount = 0;
 
     for (let i = 0; i < numbers.length; i++) {
       sum += numbers[i];
@@ -43,6 +47,11 @@ export default function Home() {
       ) {
         duplicates.push(numbers[i]);
       }
+      if (numbers[i] % 2 === 0) {
+        evenCount++;
+      } else {
+        oddCount++;
+      }
     }
 
     setSum(sum);
@@ -51,6 +60,8 @@ export default function Home() {
     setEven(even);
     setOdd(odd);
     setDuplicates(duplicates);
+    setEvenCount(evenCount);
+    setOddCount(oddCount);
   };
 
   return (
@@ -70,6 +81,8 @@ export default function Home() {
         <p>Even: {even.join(", ")}</p>
         <p>Odd: {odd.join(", ")}</p>
         <p>Duplicates: {duplicates.join(", ")}</p>
+        <p>Even Count: {evenCount}</p>
+        <p>Odd Count: {oddCount}</p>
       </main>
     </>
   );
